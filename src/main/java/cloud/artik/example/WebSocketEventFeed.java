@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-
 /**
 * WebSocket starter code to connect to ARTIK Cloud Event feed(/events) WebSocket endpoint.
 * 
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 * https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket
 * 
 */
-
 
 public class WebSocketEventFeed {
 	
@@ -36,22 +34,19 @@ public class WebSocketEventFeed {
 	// user ID associated with the access token.
 	static String uid = null;	
 	
+	// parameters below not used in this sample and set to null
 	// single `device ID` of interest
 	static String deviceId =  null;
-	
 	// comma delimited string of `device ID` of interest
 	static String sdids = null;     
-
-	// parameters below not used in this sample and set to null
 	// for use when monitoring by device type
 	static String sdtids = null;    //comma delimited string of `device type ID` of interest
-	
 	
 	public static void main(String args[]) throws URISyntaxException, IOException {
 		
 		if (!succeedParseCommand(args)) {
             printUsage();
-             return;
+            return;
         }
 		
 		// Use wild card to receive any events described in
@@ -62,7 +57,6 @@ public class WebSocketEventFeed {
 			@Override
 			public void onEvent(EventFeedData event) {
 				System.out.println(String.format("Received event:[%s]", event));
-				
 			}
 		};
 		
@@ -119,11 +113,8 @@ public class WebSocketEventFeed {
 		ws.connect();
 				
 		System.out.println("Status: " + ws.getConnectionStatus());
-		
-		
 	}
 	
-	// Usage: event-monitor -token xxx <== token can be user token
 	private static boolean succeedParseCommand(String args[]) {
 	       if (args.length < MIN_EXPECTED_ARGUMENT_NUMBER) {
 	           return false; 
@@ -145,7 +136,6 @@ public class WebSocketEventFeed {
 	           
 	           //store as query param format for printing without the '-' flag prefix
 	           queryParams.add(arg.substring(1) + "=" + args[index]);
-	           
 	           ++index;
 	       }
 	       
@@ -155,10 +145,8 @@ public class WebSocketEventFeed {
 	           return false;
 	       }
 	       
-	       // one of device (device id), sdids (list of device ids), uid (user id) must be set
-	       if (deviceId == null && sdids == null && uid == null) {
-	    	   
-	    	   System.out.println("device id or sdids null");
+	       if (uid == null) {
+	    	   System.out.println("uid null");
 	    	   return false;
 	       }
 	       
@@ -167,11 +155,9 @@ public class WebSocketEventFeed {
 	
 	private static void printUsage() {
 	       System.out.println("Usage: java -jar websocket-event-monitor-x.x.jar" + " -uid YOUR_USER_ID -t YOUR_USER_TOKEN");
-	      
 	       System.out.println("\n       monitor all events of the devices owned by this user");
 	       System.out.println("       consult the following link for supported events");
 	       System.out.println("      https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket");
-	       
 	}
 
 }
