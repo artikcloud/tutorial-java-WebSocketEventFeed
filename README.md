@@ -1,6 +1,6 @@
 # Tutorial Java Event Feed WebSocket
 
-This is a starter code to connect to ARTIK Cloud [Event feed WebSocket (/live)](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket) endpoint using ARTIK Cloud Java SDK.  By running this sample you will learn to:
+This is a starter code to connect to ARTIK Cloud [Event feed WebSocket (/events)](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket) endpoint using ARTIK Cloud Java SDK.  By running this sample you will learn to:
 
 - Connect to the ARTIK Cloud Event feed WebSocket url.
 - Monitor realtime messages sent to ARTIK Cloud by the specified source devices.

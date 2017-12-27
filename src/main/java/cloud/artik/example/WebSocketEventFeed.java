@@ -30,18 +30,18 @@ public class WebSocketEventFeed {
 	
 	static ArrayList<String> queryParams = new ArrayList<String>();
 
-	// comma delimited string of `device ID` of interest
-	static String sdids = null;     
-		
-	// here we are using the `user token` with sdids.  Or use `device token` associated device ID.
+	// here we are using the `user token`
 	static String accessToken = null;
 		
 	// user ID associated with the access token.
 	static String uid = null;	
 	
-	// single `device ID` of interest wen
+	// single `device ID` of interest
 	static String deviceId =  null;
 	
+	// comma delimited string of `device ID` of interest
+	static String sdids = null;     
+
 	// parameters below not used in this sample and set to null
 	// for use when monitoring by device type
 	static String sdtids = null;    //comma delimited string of `device type ID` of interest
@@ -58,7 +58,7 @@ public class WebSocketEventFeed {
 		// https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket
 		String events = "*";
 		
-		EventFeedWebSocketCallback eventCallback = new EventFeedWebSocketCallback() {
+		EventFeedWebSocketCallback eventFeedCallback = new EventFeedWebSocketCallback() {
 			@Override
 			public void onEvent(EventFeedData event) {
 				System.out.println(String.format("Received event:[%s]", event));
@@ -104,12 +104,10 @@ public class WebSocketEventFeed {
 		};
 		
 		// sets the parameters and callback function for the WebSocket connection
-		// must pass one of "one of deviceId, sdids, or uid" with user token"
 		EventFeedWebSocket ws = 
-				new EventFeedWebSocket(accessToken, deviceId, sdids, uid, events, generalCallback, eventCallback);
-		
-		
-		System.out.println(String.format("Connecting to: wss://api.artik.cloud/v1.1/live?authorization=bearer+%s", accessToken));
+				new EventFeedWebSocket(accessToken, deviceId, sdids, uid, events, generalCallback, eventFeedCallback);
+
+		System.out.println(String.format("Connecting to: wss://api.artik.cloud/v1.1/events?authorization=bearer+%s", accessToken));
 		
 		System.out.println("With query parameters:");
 		
@@ -135,20 +133,13 @@ public class WebSocketEventFeed {
 	       while (index < args.length) {
 	           String arg = args[index];
 	           
-	           if ("-sdids".equals(arg)) {
-	               ++index; // Move to the next argument, value for parameter
-	               sdids = args[index];
-	           } else if ("-token".equals(arg)) {
-	               ++index; // Move to the next argument, value for parameter
-	               accessToken = args[index];
-	           } else if ("-device".equals(arg)) {
-	        	   ++index; // Move to the next argument, value for parameter 
-	        	   deviceId = args[index];
-	           } else if ("-uid".equals(arg)) {
+	           if ("-uid".equals(arg)) {
 	        	   ++index; // Move to the next argument, value for parameter 
 	        	   uid = args[index];
-	           } else {
-	        	   	        	   
+	           } else if ("-t".equals(arg)) {
+	               ++index; // Move to the next argument, value for parameter
+	               accessToken = args[index];
+	           } else {  	        	   
 	        	   return false;
 	           }
 	           
@@ -175,15 +166,11 @@ public class WebSocketEventFeed {
 	   }
 	
 	private static void printUsage() {
-	       System.out.println("Usage: java -jar websocket-monitor-x.x.jar" + " -sdids YOUR_DEVICE_ID -token YOUR_USER_TOKEN");
+	       System.out.println("Usage: java -jar websocket-event-monitor-x.x.jar" + " -uid YOUR_USER_ID -t YOUR_USER_TOKEN");
 	      
-	       System.out.println("One of following flag:");
-	       System.out.println("       -device to filter by single DEVICE_ID");
-	       System.out.println("       -sdids  to filter by multiple DEVICE_IDs, comma delimited (ie:  id1, id2, id3)");
-	       System.out.println("       -uid    to filter all devices of USER_ID");
-	       
-	       System.out.println("With token");
-	       System.out.println("       -token USER_TOKEN (required), allows also DEVICE_TOKEN when used with -device flag");
+	       System.out.println("\n       monitor all events of the devices owned by this user");
+	       System.out.println("       consult the following link for supported events");
+	       System.out.println("      https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket");
 	       
 	}
 
