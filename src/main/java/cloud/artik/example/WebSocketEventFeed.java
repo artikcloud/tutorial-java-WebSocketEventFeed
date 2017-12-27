@@ -13,18 +13,18 @@ import java.util.ArrayList;
 
 
 /**
-* WebSocket starter code to connect to ARTIK Cloud Event(/events) endpoint.
+* WebSocket starter code to connect to ARTIK Cloud Event feed(/events) WebSocket endpoint.
 * 
 * ARTIK Cloud Java SDK:
 * https://github.com/artikcloud/artikcloud-java
 * 
 * Additional information available in our documentation:
-* https://developer.artik.cloud/documentation/api-reference/websockets-api.html
+* https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket
 * 
 */
 
 
-public class WebSocketEventMonitor {
+public class WebSocketEventFeed {
 	
 	private static final int MIN_EXPECTED_ARGUMENT_NUMBER = 3;
 	
