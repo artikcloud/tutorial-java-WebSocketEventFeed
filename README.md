@@ -47,7 +47,7 @@ java -jar websocket-monitor-x.x.jar -uid YOUR_USER_ID -t YOUR_USER_TOKEN
 
 Now you can monitor all types of events triggered by the devices on your account.
 
- 2. If connect a device to ARTIK cloud service on WebSocket device channel (e.g.), you should see the following output
+ 2. If connecting a device to ARTIK cloud on device channel WebSocket (e.g. [running this sample](https://github.com/artikcloud/tutorial-java-WebSocketDeviceChannel), you should see the following output
 
 ```
 Received event:[class EventFeedData {
@@ -57,7 +57,7 @@ Received event:[class EventFeedData {
 }]
 ```
 
-Stop WebSocket device channel. You should see the new event 'device.status.online' in the output
+Stop WebSocket device channel on the device. You should see the new event 'device.status.online' in the output
 
  3. At My ARTIK Cloud, connect a new device and then delete it. You should see the output like the following:
 
