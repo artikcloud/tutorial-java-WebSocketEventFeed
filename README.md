@@ -2,10 +2,10 @@
 
 This is a starter code to connect to ARTIK Cloud [event feed WebSocket (/events)](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket) endpoint using ARTIK Cloud Java SDK. By running this sample, you will learn to:
 
-- Connect to the ARTIK Cloud Event feed WebSocket url.
+- Connect to the event feed WebSocket url.
 - Monitor realtime events sent to ARTIK Cloud by the devices.
 
-**Consult the documentation for the [supported events](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket).**
+Consult the [documentation](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket) for all supported events and request parameter combinations that are beyond of this sample.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ This is a starter code to connect to ARTIK Cloud [event feed WebSocket (/events)
 ### Setup at ARTIK Cloud
 
 1. Login to [ARTIK Cloud API Console](https://developer.artik.cloud/api-console/).
-2. Retrieve your user ID and a [user token](https://developer.artik.cloud/documentation/tools/api-console.html#find-your-user-token) using our api-console, or via oauth2 authentication with your own application. 
+2. Follow the [instruction](https://developer.artik.cloud/documentation/tools/api-console.html#find-your-user-token) to retrieve your user ID and user token.
 
 ### Setup Java Project
 
@@ -45,9 +45,9 @@ This is a starter code to connect to ARTIK Cloud [event feed WebSocket (/events)
 java -jar websocket-monitor-x.x.jar -uid YOUR_USER_ID -t YOUR_USER_TOKEN
 ```
 
-Now you can monitor all types of events triggered by the devices on your account.
+**Since the user token from ARTIK Cloud API Console is used, this sample app can monitors all devices on your account.**
 
- 2. If connecting a device to ARTIK cloud on device channel WebSocket (e.g. [running this sample](https://github.com/artikcloud/tutorial-java-WebSocketDeviceChannel), you should see the following output
+ 2. If connecting a device to ARTIK cloud on device channel WebSocket (e.g. [running this sample](https://github.com/artikcloud/tutorial-java-WebSocketDeviceChannel)), you should see the output like the following:
 
 ```
 Received event:[class EventFeedData {
@@ -57,9 +57,9 @@ Received event:[class EventFeedData {
 }]
 ```
 
-Stop WebSocket device channel on the device. You should see the new event 'device.status.online' in the output
+Stop WebSocket device channel on the device. You should see the new event 'device.status.offline' in the output.
 
- 3. At My ARTIK Cloud, connect a new device and then delete it. You should see the output like the following:
+ 3. At My ARTIK Cloud, connect a new device first and then delete it. You should see the output like the following:
 
 ```
 Received event:[class EventFeedData {
