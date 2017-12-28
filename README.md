@@ -1,9 +1,11 @@
-# Tutorial Java Event Feed WebSocket
+# Tutorial Java event feed WebSocket
 
-This is a starter code to connect to ARTIK Cloud [Event feed WebSocket (/events)](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket) endpoint using ARTIK Cloud Java SDK.  By running this sample you will learn to:
+This is a starter code to connect to ARTIK Cloud [event feed WebSocket (/events)](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket) endpoint using ARTIK Cloud Java SDK. By running this sample, you will learn to:
 
 - Connect to the ARTIK Cloud Event feed WebSocket url.
-- Monitor realtime messages sent to ARTIK Cloud by the specified source devices.
+- Monitor realtime events sent to ARTIK Cloud by the devices.
+
+**Consult the documentation for the [supported events](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket).**
 
 ## Requirements
 
@@ -14,10 +16,8 @@ This is a starter code to connect to ARTIK Cloud [Event feed WebSocket (/events)
 
 ### Setup at ARTIK Cloud
 
-1. At My ARTIK Cloud, [connect a device](https://my.artik.cloud/new_device/cloud.artik.example.simple_smartlight) of the type "Example Simple Smart Light" (unique type name `cloud.artik.example.simple_smartlight`). You can use the one that you already own.
-
-2. Get the device ID for your newly created device in the [Device Info](https://developer.artik.cloud/documentation/tools/web-tools.html#managing-a-device-token) screen.
-3. Retrieve a [user token](https://developer.artik.cloud/documentation/tools/api-console.html#find-your-user-token) using our api-console, or via oauth2 authentication with your own application. 
+1. Login to [ARTIK Cloud API Console](https://developer.artik.cloud/api-console/).
+2. Retrieve your user ID and a [user token](https://developer.artik.cloud/documentation/tools/api-console.html#find-your-user-token) using our api-console, or via oauth2 authentication with your own application. 
 
 ### Setup Java Project
 
@@ -29,69 +29,62 @@ This is a starter code to connect to ARTIK Cloud [Event feed WebSocket (/events)
    mvn clean package
    ```
 
-   The executable `websocket-monitor-x.x.jar` is generated under the target directory.
+   The executable `websocket-event-monitor-x.x.jar` is generated under the target directory.
 
 3. Run the command at the target directory to learn the usage:
 
    ```
-   java -jar websocket-monitor-x.x.jar
+   java -jar websocket-event-monitor-x.x.jar
    ```
 
 ## Demo:
 
-1. Start and run the following command in the target directory:
+ 1. Start and run the following command in the target directory.
 
 ```
-java -jar websocket-monitor-x.x.jar -device YOUR_DEVICE_ID -token YOUR_USER_TOKEN
+java -jar websocket-monitor-x.x.jar -uid YOUR_USER_ID -t YOUR_USER_TOKEN
 ```
 
-2. Send messages to your Example Simple Smart Light using the [Online Device Simulator](https://developer.artik.cloud/documentation/tools/web-tools.html#using-the-online-device-simulator).   Simulate the device with following settings:
+Now you can monitor all types of events triggered by the devices on your account.
+
+ 2. If connect a device to ARTIK cloud service on WebSocket device channel (e.g.), you should see the following output
 
 ```
-* Simulate data on the boolean "state" field with default 5000 ms (5 secs).   
-* Alternative between true/false value by setting the data pattern to "alternating boolean".
-```
-
-2. In your running sample application you will see the received messages.    Here is the example output:
-
-```bash
-Connecting to: wss://api.artik.cloud/v1.1/live?authorization=bearer+aa176...&device=bb101...
-Status: CONNECTING ...
-Connection successful with code:[101]
-
-Received ping with ts:[1507328677960]
-
-Received message:[class MessageOut {
-    data: {state=true}
-    cid: null
-    ddid: null
-    sdid: bb101...
-    ts: 1507328710000
-    type: message
-    mid: ba31d3eb38e342a49226828ff1dac58d
-    uid: ff123...
-    sdtid: dtd1d3e0934d9348b783166938c0380128
-    cts: 1507328699982
-    mv: 1
+Received event:[class EventFeedData {
+    event: device.status.online
+    ts: 1514400645581
+    data: {uid=77edb, did=81788}
 }]
-
-Received message:[class MessageOut {
-    data: {state=false}
-    cid: null
-    ddid: null
-    sdid: bb101...
-    ts: 1507328715000
-    type: message
-    mid: 8070d27294f04620a82b389c9e768aab
-    uid: ff123...
-    sdtid: dtd1d3e0934d9348b783166938c0380128
-    cts: 1507328704710
-    mv: 1
-}]
-Received ping with ts:[1507328707969]
 ```
 
-3. Stop the simulation so it does not accrue any more data usage.
+Stop WebSocket device channel. You should see the new event 'device.status.online' in the output
+
+ 3. At My ARTIK Cloud, connect a new device and then delete it. You should see the output like the following:
+
+```
+Received event:[class EventFeedData {
+    event: device.new
+    ts: 1514425057542
+    data: {uid=77edbc617b32, aid=d18f11ef, did=c19dc9e, dtid=dt013005}
+}]
+Received event:[class EventFeedData {
+    event: device.connected
+    ts: 1514425057542
+    data: {uid=77edbc617b32, aid=d18f11ef, did=c19dc9e, dtid=dt013005}
+}]
+Received ping with ts:[1514425069806]
+Received event:[class EventFeedData {
+    event: device.disconnected
+    ts: 1514425078317
+    data: {uid=77edbc617b32, aid=d18f11ef, did=c19dc9e, dtid=dt013005}
+}]
+Received event:[class EventFeedData {
+    event: device.deleted
+    ts: 1514425078317
+    data: {uid=77edbc617b32, aid=d18f11ef, did=c19dc9e, dtid=dt013005}
+```
+
+4. You can try [other supported events](https://developer.artik.cloud/documentation/data-management/rest-and-websockets.html#event-feed-websocket).
 
 ## More about ARTIK Cloud
 
